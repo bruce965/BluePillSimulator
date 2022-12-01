@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Alias="uint8_t" Include="System.Byte" />
+    <Using Alias="uint16_t" Include="System.UInt16" />
+    <Using Alias="uint32_t" Include="System.UInt32" />
+    <Using Alias="uint64_t" Include="System.UInt64" />
+    <Using Alias="int8_t" Include="System.SByte" />
+    <Using Alias="int16_t" Include="System.Int16" />
+    <Using Alias="int32_t" Include="System.Int32" />
+    <Using Alias="int64_t" Include="System.Int64" />
+    <Using Alias="size_t" Include="System.IntPtr" />
+  </ItemGroup>
+
+</Project>
