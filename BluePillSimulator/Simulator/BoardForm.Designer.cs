@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pinB12 = new BluePillSimulator.Simulator.PinControl();
             this.pinB13 = new BluePillSimulator.Simulator.PinControl();
             this.pinB14 = new BluePillSimulator.Simulator.PinControl();
@@ -75,6 +76,9 @@
             this.buttonPlayPause = new System.Windows.Forms.Button();
             this.buttonClockMode = new System.Windows.Forms.Button();
             this.ssd1306 = new BluePillSimulator.Simulator.SSD1306Display();
+            this.oscilloscope1 = new BluePillSimulator.Simulator.Oscilloscope();
+            this.oscilloscopePin1 = new System.Windows.Forms.ComboBox();
+            this.timer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // pinB12
@@ -85,7 +89,7 @@
             this.pinB12.PinName = "PB12";
             this.pinB12.Size = new System.Drawing.Size(300, 29);
             this.pinB12.TabIndex = 2;
-            this.pinB12.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinB12.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinB13
             // 
@@ -95,7 +99,7 @@
             this.pinB13.PinName = "PB13";
             this.pinB13.Size = new System.Drawing.Size(300, 29);
             this.pinB13.TabIndex = 4;
-            this.pinB13.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinB13.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinB14
             // 
@@ -105,7 +109,7 @@
             this.pinB14.PinName = "PB14";
             this.pinB14.Size = new System.Drawing.Size(300, 29);
             this.pinB14.TabIndex = 6;
-            this.pinB14.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinB14.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinB15
             // 
@@ -115,7 +119,7 @@
             this.pinB15.PinName = "PB15";
             this.pinB15.Size = new System.Drawing.Size(300, 29);
             this.pinB15.TabIndex = 8;
-            this.pinB15.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinB15.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinA8
             // 
@@ -125,7 +129,7 @@
             this.pinA8.PinName = "PA8";
             this.pinA8.Size = new System.Drawing.Size(300, 29);
             this.pinA8.TabIndex = 10;
-            this.pinA8.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinA8.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinA9
             // 
@@ -135,7 +139,7 @@
             this.pinA9.PinName = "PA9";
             this.pinA9.Size = new System.Drawing.Size(300, 29);
             this.pinA9.TabIndex = 12;
-            this.pinA9.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinA9.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinA11
             // 
@@ -145,7 +149,7 @@
             this.pinA11.PinName = "PA11";
             this.pinA11.Size = new System.Drawing.Size(300, 29);
             this.pinA11.TabIndex = 16;
-            this.pinA11.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinA11.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinA10
             // 
@@ -155,7 +159,7 @@
             this.pinA10.PinName = "PA10";
             this.pinA10.Size = new System.Drawing.Size(300, 29);
             this.pinA10.TabIndex = 14;
-            this.pinA10.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinA10.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinA12
             // 
@@ -165,7 +169,7 @@
             this.pinA12.PinName = "PA12";
             this.pinA12.Size = new System.Drawing.Size(300, 29);
             this.pinA12.TabIndex = 18;
-            this.pinA12.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinA12.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinA15
             // 
@@ -175,7 +179,7 @@
             this.pinA15.PinName = "PA15";
             this.pinA15.Size = new System.Drawing.Size(300, 29);
             this.pinA15.TabIndex = 20;
-            this.pinA15.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinA15.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinB3
             // 
@@ -185,7 +189,7 @@
             this.pinB3.PinName = "PB3";
             this.pinB3.Size = new System.Drawing.Size(300, 29);
             this.pinB3.TabIndex = 22;
-            this.pinB3.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinB3.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinB4
             // 
@@ -195,7 +199,7 @@
             this.pinB4.PinName = "PB4";
             this.pinB4.Size = new System.Drawing.Size(300, 29);
             this.pinB4.TabIndex = 24;
-            this.pinB4.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinB4.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinB6
             // 
@@ -205,7 +209,7 @@
             this.pinB6.PinName = "PB6";
             this.pinB6.Size = new System.Drawing.Size(300, 29);
             this.pinB6.TabIndex = 28;
-            this.pinB6.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinB6.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinB5
             // 
@@ -215,7 +219,7 @@
             this.pinB5.PinName = "PB5";
             this.pinB5.Size = new System.Drawing.Size(300, 29);
             this.pinB5.TabIndex = 26;
-            this.pinB5.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinB5.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinB8
             // 
@@ -225,7 +229,7 @@
             this.pinB8.PinName = "PB8";
             this.pinB8.Size = new System.Drawing.Size(300, 29);
             this.pinB8.TabIndex = 32;
-            this.pinB8.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinB8.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinB7
             // 
@@ -235,7 +239,7 @@
             this.pinB7.PinName = "PB7";
             this.pinB7.Size = new System.Drawing.Size(300, 29);
             this.pinB7.TabIndex = 30;
-            this.pinB7.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinB7.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinB9
             // 
@@ -245,7 +249,7 @@
             this.pinB9.PinName = "PB9";
             this.pinB9.Size = new System.Drawing.Size(300, 29);
             this.pinB9.TabIndex = 34;
-            this.pinB9.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinB9.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pin5V
             // 
@@ -255,7 +259,7 @@
             this.pin5V.PinName = "5V";
             this.pin5V.Size = new System.Drawing.Size(300, 29);
             this.pin5V.TabIndex = 36;
-            this.pin5V.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pin5V.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinGnd
             // 
@@ -266,7 +270,7 @@
             this.pinGnd.PinName = "GND";
             this.pinGnd.Size = new System.Drawing.Size(300, 29);
             this.pinGnd.TabIndex = 38;
-            this.pinGnd.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinGnd.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pin33V
             // 
@@ -277,7 +281,7 @@
             this.pin33V.PinName = "3.3V";
             this.pin33V.Size = new System.Drawing.Size(300, 29);
             this.pin33V.TabIndex = 40;
-            this.pin33V.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pin33V.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinGnd2
             // 
@@ -287,7 +291,7 @@
             this.pinGnd2.PinName = "GND";
             this.pinGnd2.Size = new System.Drawing.Size(300, 29);
             this.pinGnd2.TabIndex = 3;
-            this.pinGnd2.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinGnd2.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinGnd3
             // 
@@ -297,7 +301,7 @@
             this.pinGnd3.PinName = "GND";
             this.pinGnd3.Size = new System.Drawing.Size(300, 29);
             this.pinGnd3.TabIndex = 5;
-            this.pinGnd3.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinGnd3.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pin33V2
             // 
@@ -307,7 +311,7 @@
             this.pin33V2.PinName = "3.3V";
             this.pin33V2.Size = new System.Drawing.Size(300, 29);
             this.pin33V2.TabIndex = 7;
-            this.pin33V2.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pin33V2.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinRst
             // 
@@ -316,7 +320,7 @@
             this.pinRst.PinName = "RST";
             this.pinRst.Size = new System.Drawing.Size(300, 29);
             this.pinRst.TabIndex = 9;
-            this.pinRst.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinRst.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinB11
             // 
@@ -325,7 +329,7 @@
             this.pinB11.PinName = "PB11";
             this.pinB11.Size = new System.Drawing.Size(300, 29);
             this.pinB11.TabIndex = 11;
-            this.pinB11.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinB11.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinB10
             // 
@@ -334,7 +338,7 @@
             this.pinB10.PinName = "PB10";
             this.pinB10.Size = new System.Drawing.Size(300, 29);
             this.pinB10.TabIndex = 13;
-            this.pinB10.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinB10.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinB1
             // 
@@ -343,7 +347,7 @@
             this.pinB1.PinName = "PB1";
             this.pinB1.Size = new System.Drawing.Size(300, 29);
             this.pinB1.TabIndex = 15;
-            this.pinB1.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinB1.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinB0
             // 
@@ -352,7 +356,7 @@
             this.pinB0.PinName = "PB0";
             this.pinB0.Size = new System.Drawing.Size(300, 29);
             this.pinB0.TabIndex = 17;
-            this.pinB0.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinB0.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinA7
             // 
@@ -361,7 +365,7 @@
             this.pinA7.PinName = "PA7";
             this.pinA7.Size = new System.Drawing.Size(300, 29);
             this.pinA7.TabIndex = 19;
-            this.pinA7.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinA7.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinA6
             // 
@@ -370,7 +374,7 @@
             this.pinA6.PinName = "PA6";
             this.pinA6.Size = new System.Drawing.Size(300, 29);
             this.pinA6.TabIndex = 21;
-            this.pinA6.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinA6.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinA4
             // 
@@ -379,7 +383,7 @@
             this.pinA4.PinName = "PA4";
             this.pinA4.Size = new System.Drawing.Size(300, 29);
             this.pinA4.TabIndex = 25;
-            this.pinA4.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinA4.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinA5
             // 
@@ -388,7 +392,7 @@
             this.pinA5.PinName = "PA5";
             this.pinA5.Size = new System.Drawing.Size(300, 29);
             this.pinA5.TabIndex = 23;
-            this.pinA5.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinA5.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinA2
             // 
@@ -397,7 +401,7 @@
             this.pinA2.PinName = "PA2";
             this.pinA2.Size = new System.Drawing.Size(300, 29);
             this.pinA2.TabIndex = 29;
-            this.pinA2.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinA2.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinA3
             // 
@@ -406,7 +410,7 @@
             this.pinA3.PinName = "PA3";
             this.pinA3.Size = new System.Drawing.Size(300, 29);
             this.pinA3.TabIndex = 27;
-            this.pinA3.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinA3.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinA0
             // 
@@ -415,7 +419,7 @@
             this.pinA0.PinName = "PA0";
             this.pinA0.Size = new System.Drawing.Size(300, 29);
             this.pinA0.TabIndex = 33;
-            this.pinA0.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinA0.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinA1
             // 
@@ -424,7 +428,7 @@
             this.pinA1.PinName = "PA1";
             this.pinA1.Size = new System.Drawing.Size(300, 29);
             this.pinA1.TabIndex = 31;
-            this.pinA1.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinA1.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinC15
             // 
@@ -433,7 +437,7 @@
             this.pinC15.PinName = "PC15";
             this.pinC15.Size = new System.Drawing.Size(300, 29);
             this.pinC15.TabIndex = 35;
-            this.pinC15.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinC15.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinC14
             // 
@@ -442,7 +446,7 @@
             this.pinC14.PinName = "PC14";
             this.pinC14.Size = new System.Drawing.Size(300, 29);
             this.pinC14.TabIndex = 37;
-            this.pinC14.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinC14.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinC13
             // 
@@ -451,7 +455,7 @@
             this.pinC13.PinName = "PC13";
             this.pinC13.Size = new System.Drawing.Size(300, 29);
             this.pinC13.TabIndex = 39;
-            this.pinC13.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinC13.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinVBat
             // 
@@ -460,7 +464,7 @@
             this.pinVBat.PinName = "VBAT";
             this.pinVBat.Size = new System.Drawing.Size(300, 29);
             this.pinVBat.TabIndex = 41;
-            this.pinVBat.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinVBat.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinBoot1
             // 
@@ -471,7 +475,7 @@
             this.pinBoot1.PinName = "BOOT1";
             this.pinBoot1.Size = new System.Drawing.Size(300, 29);
             this.pinBoot1.TabIndex = 0;
-            this.pinBoot1.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinBoot1.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinBoot0
             // 
@@ -481,7 +485,7 @@
             this.pinBoot0.PinName = "BOOT0";
             this.pinBoot0.Size = new System.Drawing.Size(300, 29);
             this.pinBoot0.TabIndex = 1;
-            this.pinBoot0.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinBoot0.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinA14
             // 
@@ -490,7 +494,7 @@
             this.pinA14.PinName = "PA14";
             this.pinA14.Size = new System.Drawing.Size(300, 29);
             this.pinA14.TabIndex = 43;
-            this.pinA14.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinA14.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // pinA13
             // 
@@ -500,7 +504,7 @@
             this.pinA13.PinName = "PA13";
             this.pinA13.Size = new System.Drawing.Size(300, 29);
             this.pinA13.TabIndex = 42;
-            this.pinA13.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.inputChange);
+            this.pinA13.InputChange += new BluePillSimulator.Simulator.PinControl.InputChangeEventHandler(this.InputChange);
             // 
             // buttonPlayPause
             // 
@@ -510,7 +514,7 @@
             this.buttonPlayPause.TabIndex = 44;
             this.buttonPlayPause.Text = "Start simulation";
             this.buttonPlayPause.UseVisualStyleBackColor = true;
-            this.buttonPlayPause.Click += new System.EventHandler(this.playPauseSimulation);
+            this.buttonPlayPause.Click += new System.EventHandler(this.PlayPauseSimulation);
             // 
             // buttonClockMode
             // 
@@ -520,22 +524,48 @@
             this.buttonClockMode.TabIndex = 49;
             this.buttonClockMode.Text = "Current clock mode: realtime";
             this.buttonClockMode.UseVisualStyleBackColor = true;
-            this.buttonClockMode.Click += new System.EventHandler(this.toggleClockMode);
+            this.buttonClockMode.Click += new System.EventHandler(this.ToggleClockMode);
             // 
-            // ssD1306Display1
+            // ssd1306
             // 
             this.ssd1306.Display = null;
             this.ssd1306.Location = new System.Drawing.Point(329, 517);
-            this.ssd1306.Name = "ssD1306Display1";
+            this.ssd1306.Name = "ssd1306";
             this.ssd1306.Size = new System.Drawing.Size(256, 64);
             this.ssd1306.TabIndex = 50;
             this.ssd1306.Text = "ssD1306Display1";
+            // 
+            // oscilloscope1
+            // 
+            this.oscilloscope1.Hold = true;
+            this.oscilloscope1.Location = new System.Drawing.Point(312, 372);
+            this.oscilloscope1.Name = "oscilloscope1";
+            this.oscilloscope1.Size = new System.Drawing.Size(290, 116);
+            this.oscilloscope1.TabIndex = 51;
+            this.oscilloscope1.Text = "oscilloscope1";
+            // 
+            // oscilloscopePin1
+            // 
+            this.oscilloscopePin1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.oscilloscopePin1.FormattingEnabled = true;
+            this.oscilloscopePin1.Location = new System.Drawing.Point(519, 462);
+            this.oscilloscopePin1.Name = "oscilloscopePin1";
+            this.oscilloscopePin1.Size = new System.Drawing.Size(80, 23);
+            this.oscilloscopePin1.TabIndex = 52;
+            this.oscilloscopePin1.SelectedIndexChanged += new System.EventHandler(this.OscilloscopePinChanged);
+            // 
+            // timer
+            // 
+            this.timer.Interval = 10;
+            this.timer.Tick += new System.EventHandler(this.syncWithSimulation);
             // 
             // BoardForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(920, 688);
+            this.Controls.Add(this.oscilloscopePin1);
+            this.Controls.Add(this.oscilloscope1);
             this.Controls.Add(this.ssd1306);
             this.Controls.Add(this.buttonClockMode);
             this.Controls.Add(this.buttonPlayPause);
@@ -640,5 +670,8 @@
         private System.Windows.Forms.Button buttonPlayPause;
         private System.Windows.Forms.Button buttonClockMode;
         private SSD1306Display ssd1306;
+        private Oscilloscope oscilloscope1;
+        private ComboBox oscilloscopePin1;
+        private System.Windows.Forms.Timer timer;
     }
 }

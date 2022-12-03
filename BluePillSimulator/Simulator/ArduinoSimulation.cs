@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using System.Diagnostics;
 using static Arduino;
 
 namespace BluePillSimulator.Simulator;
@@ -116,6 +117,25 @@ class ArduinoSimulation : IDisposable
         return v > 2 ? HIGH : LOW;
     }
 
+    public uint analogRead(uint pin)
+    {
+        CheckSuspended();
+
+        float? v;
+        uint m;
+        lock (_guard)
+        {
+            var p = GetPin(pin);
+            v = p.InputVoltage;
+            m = p.Mode;
+        }
+
+        if (v == null)
+            v = (m == INPUT_PULLUP) ? 3.3f : 0f;
+
+        return (uint)(Math.Clamp(v.Value / 3.3f, 0f, 1f) * 1023);
+    }
+
     public void digitalWrite(uint pin, uint val)
     {
         CheckSuspended();
@@ -158,7 +178,9 @@ class ArduinoSimulation : IDisposable
         _thread = new(() =>
         {
             _callsToTimeFunctionSinceLastAdvanceTime = 0;
-            _lastAdvanceTime = DateTime.UtcNow;
+            _lastAdvanceTime = _sw.Elapsed;
+
+            _sw.Start();
 
             try
             {
@@ -174,6 +196,8 @@ class ArduinoSimulation : IDisposable
 
                     loop();
 
+                    LoopEnd?.Invoke(this, EventArgs.Empty);
+
                     AdvanceTime();
                 }
             }
@@ -188,6 +212,7 @@ class ArduinoSimulation : IDisposable
         });
 
         _thread.Name = nameof(ArduinoSimulation);
+        _thread.IsBackground = true;
         _thread.Start();
     }
 
@@ -252,6 +277,8 @@ class ArduinoSimulation : IDisposable
         }
     }
 
+    public event EventHandler? LoopEnd;
+
     #endregion
 
     #region Time tracking
@@ -265,9 +292,10 @@ class ArduinoSimulation : IDisposable
 
     TimeSpan _currentTime = TimeSpan.Zero;
     ClockMode _clockMode = ClockMode.Realtime;
+    Stopwatch _sw = new Stopwatch();
 
     int _callsToTimeFunctionSinceLastAdvanceTime;
-    DateTime _lastAdvanceTime;
+    TimeSpan _lastAdvanceTime;
 
     public ClockMode SimulationClockMode
     {
@@ -285,7 +313,7 @@ class ArduinoSimulation : IDisposable
 
     void AdvanceTime()
     {
-        var now = DateTime.UtcNow;
+        var now = _sw.Elapsed;
 
         _currentTime += _clockMode switch
         {
@@ -302,7 +330,7 @@ class ArduinoSimulation : IDisposable
 
     void SkipTime()
     {
-        _lastAdvanceTime = DateTime.UtcNow;
+        _lastAdvanceTime = _sw.Elapsed;
     }
 
     #endregion
@@ -347,6 +375,31 @@ class ArduinoSimulation : IDisposable
             GetPin(pin).InputVoltage = voltage;
     }
 
+    public float? SimulationGetPinVoltage(uint pin)
+    {
+        float? v;
+        lock (_guard)
+        {
+            var p = GetPin(pin);
+            v = p.InputVoltage ?? p.OutputVoltage;
+        }
+
+        return v;
+    }
+
+    public uint SimulationGetPinMode(uint pin)
+    {
+        uint m;
+        lock (_guard)
+        {
+            var p = GetPin(pin);
+            m = p.Mode;
+        }
+
+        return m;
+    }
+
+
     public event PinModeChangeEventHandler? SimulationPinModeChange;
 
     public event PinVoltageChangeEventHandler? SimulationPinOutputVoltageChange;
@@ -375,7 +428,7 @@ class ArduinoSimulation : IDisposable
 
                     if (_thread.IsAlive)
                     {
-                        _thread.Interrupt();
+                        _thread.Interrupt(); // this does not work if the thread is stuck in a loop
                         _thread = null;
                     }
                 }

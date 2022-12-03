@@ -78,6 +78,8 @@ public static class Arduino
 
     public static uint digitalRead(uint pin) => Sim.digitalRead(pin);
 
+    public static uint analogRead(uint pin) => Sim.analogRead(pin);
+
     public static void digitalWrite(uint pin, uint val) => Sim.digitalWrite(pin, val);
 
     /// <summary>

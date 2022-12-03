@@ -10,6 +10,9 @@ partial class BoardForm : Form
     Dictionary<uint, PinControl> _pinToControl;
     Dictionary<PinControl, uint> _controlToPin;
 
+    TimeSpan _oscilloscope1Next;
+    uint? _oscilloscopeSelectedPin1;
+
     public BoardForm(ArduinoSimulation simulation)
     {
         _simulation = simulation;
@@ -57,27 +60,44 @@ partial class BoardForm : Form
 
         _controlToPin = _pinToControl.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
 
-        _simulation.SimulationPinModeChange += (sender, args) => Invoke(() => pinModeChange(sender, args));
-        _simulation.SimulationPinOutputVoltageChange += (sender, args) => Invoke(() => pinOutputVoltageChange(sender, args));
+        oscilloscopePin1.Items.AddRange(_pinToControl.Select(kvp => new { kvp.Value.PinName, Pin = kvp.Key }).ToArray());
+        oscilloscopePin1.DisplayMember = "PinName";
+        oscilloscopePin1.ValueMember = "Pin";
+
+        //_simulation.SimulationPinModeChange += (sender, args) => Invoke(() => PinModeChange(sender, args));
+        //_simulation.SimulationPinOutputVoltageChange += (sender, args) => Invoke(() => PinOutputVoltageChange(sender, args));
+        _simulation.LoopEnd += (sender, args) =>
+        {
+            if (!_oscilloscopeSelectedPin1.HasValue)
+                return;
+
+            var v = _simulation.SimulationGetPinVoltage(_oscilloscopeSelectedPin1.Value) ?? Random.Shared.NextSingle() * .4f - 0.2f;
+            oscilloscope1.PushSampleThreadSafe(v);
+        };
 
         _simulation.Wire.Update += (sender, args) => Invoke(() => ssd1306.Display = _simulation.Wire._attachedDisplay);
     }
 
-    void playPauseSimulation(object sender, EventArgs e)
+    void PlayPauseSimulation(object sender, EventArgs e)
     {
         if (_simulation.IsSimulationRunning)
         {
             buttonPlayPause.Text = "Resume simulation";
+            oscilloscope1.Hold = true;
+            timer.Enabled = false;
             _simulation.SimulationPause();
+            syncWithSimulation(sender, e);
         }
         else
         {
             buttonPlayPause.Text = "Suspend simulation";
+            oscilloscope1.Hold = false;
+            timer.Enabled = true;
             _simulation.SimulationPlay();
         }
     }
 
-    void toggleClockMode(object sender, EventArgs e)
+    void ToggleClockMode(object sender, EventArgs e)
     {
         switch (_simulation.SimulationClockMode)
         {
@@ -98,7 +118,7 @@ partial class BoardForm : Form
         }
     }
 
-    void inputChange(object sender, PinControl.InputChangeEventArgs e)
+    void InputChange(object sender, PinControl.InputChangeEventArgs e)
     {
         float? voltage = null;
         if (float.TryParse(e.Input.TrimEnd('V'), NumberStyles.Number, CultureInfo.InvariantCulture, out var v))
@@ -108,7 +128,7 @@ partial class BoardForm : Form
             _simulation.SimulationSetPinInput(pin, voltage);
     }
 
-    void pinModeChange(object sender, ArduinoSimulation.PinModeChangeEventArgs e)
+    void PinModeChange(object sender, ArduinoSimulation.PinModeChangeEventArgs e)
     {
         if (!_pinToControl.TryGetValue(e.Pin, out var control))
             return;
@@ -116,11 +136,30 @@ partial class BoardForm : Form
         control.PinMode = (PinMode)e.Mode;
     }
 
-    void pinOutputVoltageChange(object sender, ArduinoSimulation.PinVoltageChangeEventArgs e)
+    void PinOutputVoltageChange(object sender, ArduinoSimulation.PinVoltageChangeEventArgs e)
     {
         if (!_pinToControl.TryGetValue(e.Pin, out var control))
             return;
 
         control.PinOutput = e.Voltage == null ? "" : $"{e.Voltage.Value.ToString("0.000", CultureInfo.InvariantCulture)}V";
+    }
+
+    void OscilloscopePinChanged(object sender, EventArgs e)
+    {
+        if (sender == oscilloscopePin1)
+            _oscilloscopeSelectedPin1 = ((dynamic?)oscilloscopePin1.SelectedItem)?.Pin;
+    }
+
+    void syncWithSimulation(object sender, EventArgs e)
+    {
+        foreach (var kvp in _controlToPin)
+        {
+            var voltage = _simulation.SimulationGetPinVoltage(kvp.Value);
+
+            kvp.Key.PinMode = (PinMode)_simulation.SimulationGetPinMode(kvp.Value);
+            kvp.Key.PinOutput = voltage == null ? "" : $"{voltage.Value.ToString("0.000", CultureInfo.InvariantCulture)}V";
+        }
+
+        oscilloscope1.Invalidate();
     }
 }

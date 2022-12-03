@@ -44,6 +44,11 @@ public class Adafruit_GFX
         textsize_y = (s_y > 0) ? s_y : (uint8_t)1;
     }
 
+    public void setTextWrap(bool w)
+    {
+        wrap = w;
+    }
+
     public void setTextColor(uint16_t c)
     {
         textcolor = textbgcolor = c;
@@ -52,6 +57,13 @@ public class Adafruit_GFX
     public void cp437(bool x = true)
     {
         _cp437 = x;
+    }
+
+    public void drawRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color)
+    {
+        for (int16_t pY = 0; pY < h; pY++)
+            for (int16_t pX = 0; pX < w; pX++)
+                writePixel((int16_t)(x + pX), (int16_t)(y + pY), color);
     }
 
     public size_t write(int c) => write((uint8_t)c);
